@@ -1,4 +1,4 @@
-#include "bx/engine/core/thread.hpp"
+#include "bx/platform/thread.hpp"
 
 Worker::Worker()
 	: m_queueLock()
