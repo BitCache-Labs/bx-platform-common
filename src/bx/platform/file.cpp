@@ -2,7 +2,7 @@
 
 #include <bx/core/macros.hpp>
 #include <bx/core/guard.hpp>
-#include <bx/core/containers/hash_map.hpp>
+#include <bx/containers/hash_map.hpp>
 
 #if defined(BX_PLATFORM_PC)
 #include <windows.h>
