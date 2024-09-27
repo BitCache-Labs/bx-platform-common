@@ -4,7 +4,7 @@
 #include <bx/core/guard.hpp>
 #include <bx/containers/hash_map.hpp>
 
-#if defined(BX_PLATFORM_PC)
+#if defined(BX_PLATFORM_WINDOWS)
 #include <windows.h>
 #include <tchar.h> 
 #include <stdio.h>
@@ -58,7 +58,7 @@ static List<String> StringSplit(const String& source, const char* delimiter, boo
 
 void File::Initialize()
 {
-#if defined(BX_PLATFORM_PC) || defined(BX_PLATFORM_LINUX)
+#if defined(BX_PLATFORM_WINDOWS) || defined(BX_PLATFORM_LINUX)
 	AddWildcard("[assets]", BX_PROJECT_PATH"/game/assets");
 	AddWildcard("[settings]", BX_PROJECT_PATH"/game/settings");
 
@@ -78,7 +78,7 @@ void File::Initialize()
 	}
 #endif
 
-#if defined(BX_PLATFORM_PC)
+#if defined(BX_PLATFORM_WINDOWS)
 	char* pValue;
 	size_t len;
 	_dupenv_s(&pValue, &len, "APPDATA");
@@ -227,7 +227,7 @@ bool File::Move(const String& oldPath, const String& newPath)
 	String oldFullPath = File::GetPath(oldPath);
 	String newFullPath = File::GetPath(newPath);
 
-#if defined(BX_PLATFORM_PC)
+#if defined(BX_PLATFORM_WINDOWS)
 	LPCSTR oldFileName = oldFullPath.c_str();
 	LPCSTR newFileName = newFullPath.c_str();
 
@@ -254,7 +254,7 @@ bool File::Move(const String& oldPath, const String& newPath)
 
 bool File::Delete(const String& filename)
 {
-#if defined(BX_PLATFORM_PC)
+#if defined(BX_PLATFORM_WINDOWS)
 	const String fullpath = GetPath(filename);
 	
 	DWORD attributes = GetFileAttributes(fullpath.c_str());
@@ -303,7 +303,7 @@ bool File::Exists(const String& path)
 
 bool File::CreateDirectory(const String& path)
 {
-#if defined(BX_PLATFORM_PC)
+#if defined(BX_PLATFORM_WINDOWS)
 	BOOL ret = WinCreateDirectory(path.c_str(), NULL);
 	switch (GetLastError())
 	{
@@ -332,8 +332,8 @@ bool File::CreateDirectory(const String& path)
 
 u64 File::LastWrite(const String& filename)
 {
-#if (defined(BX_PLATFORM_PC) || defined(BX_PLATFORM_LINUX)) \
-&& (defined(BX_BUILD_DEBUG) || defined(BX_BUILD_PROFILE))
+#if (defined(BX_PLATFORM_WINDOWS) || defined(BX_PLATFORM_LINUX)) \
+&& (defined(BX_DEBUG_BUILD) || defined(BX_PROFILE_BUILD))
 	const auto filepath = GetPath(filename);
 	struct stat info;
 	if (stat(filename.c_str(), &info) == 0)
@@ -347,7 +347,7 @@ u64 File::LastWrite(const String& filename)
 
 bool File::ListFiles(const String& root, List<FileHandle>& files)
 {
-#if defined(BX_PLATFORM_PC)
+#if defined(BX_PLATFORM_WINDOWS)
 
 	String rootPath = GetPath(root);
 
