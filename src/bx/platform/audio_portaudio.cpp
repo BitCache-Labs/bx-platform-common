@@ -1,10 +1,17 @@
-#include "bx/platform/audio.hpp"
+#include <bx/platform/audio_portaudio.hpp>
 
-#include "bx/core/macros.hpp"
+#include <bx/core/macros.hpp>
 
 #include <stdio.h>
 #include <math.h>
 #include <portaudio.h>
+
+#include <rttr/registration.h>
+RTTR_PLUGIN_REGISTRATION
+{
+    rttr::registration::class_<AudioPortAudio>("AudioPortAudio")
+        .constructor();
+}
 
 #define AUDIO_MAX_CLIPS_PER_CHANNEL (100)
 
@@ -58,40 +65,40 @@ static int AudioCallback(
     return paContinue;
 }
 
-AudioHandle Audio::GetDefaultChannel()
+AudioHandle AudioPortAudio::GetDefaultChannel()
 {
     return 0;
 }
 
-void Audio::CreateChannel(const ChannelInfo& info)
+void AudioPortAudio::CreateChannel(const ChannelInfo& info)
 {
 }
 
-void Audio::DestroyChannel(const AudioHandle channel)
+void AudioPortAudio::DestroyChannel(const AudioHandle channel)
 {
 }
 
-void Audio::SetChannelVolume(const AudioHandle channel, f32 volume)
+void AudioPortAudio::SetChannelVolume(const AudioHandle channel, f32 volume)
 {
 }
 
-void Audio::CreateAudio(const AudioInfo& info)
+void AudioPortAudio::CreateAudio(const AudioInfo& info)
 {
 }
 
-void Audio::DestroyAudio(const AudioHandle audio)
+void AudioPortAudio::DestroyAudio(const AudioHandle audio)
 {
 }
 
-void Audio::PlayAudio(const AudioHandle channel, const AudioHandle audio)
+void AudioPortAudio::PlayAudio(const AudioHandle channel, const AudioHandle audio)
 {
 }
 
-void Audio::StopAudio(const AudioHandle channel, const AudioHandle audio)
+void AudioPortAudio::StopAudio(const AudioHandle channel, const AudioHandle audio)
 {
 }
 
-bool Audio::Initialize()
+bool AudioPortAudio::Initialize()
 {
     PaError err = Pa_Initialize();
     if (err != paNoError)
@@ -126,11 +133,11 @@ bool Audio::Initialize()
     return true;
 }
 
-void Audio::Reload()
+void AudioPortAudio::Reload()
 {
 }
 
-void Audio::Shutdown()
+void AudioPortAudio::Shutdown()
 {
     PaError err = Pa_StopStream(g_stream);
     if (err != paNoError)

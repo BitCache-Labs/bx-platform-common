@@ -73,34 +73,38 @@ if (BX_GRAPHICS_BACKEND STREQUAL "OpenGL")
 
 #elseif (BX_GRAPHICS_BACKEND STREQUAL "OpenGLES")
 #    message(STATUS "Using OpenGLES as the graphics backend")
-#    target_compile_definitions(bx-platform PUBLIC BX_GRAPHICS_OPENGLES_BACKEND)
+#    target_compile_definitions(bx-platform-common PUBLIC BX_GRAPHICS_OPENGLES_BACKEND)
 #
 #elseif (BX_GRAPHICS_BACKEND STREQUAL "Vulkan")
 #    message(STATUS "Using Vulkan as the graphics backend")
-#    target_compile_definitions(bx-platform PUBLIC BX_GRAPHICS_VULKAN_BACKEND)
+#    target_compile_definitions(bx-platform-common PUBLIC BX_GRAPHICS_VULKAN_BACKEND)
 
 elseif (BX_GRAPHICS_BACKEND STREQUAL "Custom")
     message(STATUS "Using a custom graphics backend")
-    target_compile_definitions(bx PUBLIC BX_GRAPHICS_CUSTOM_BACKEND)
+    target_compile_definitions(bx-platform-common PUBLIC BX_GRAPHICS_CUSTOM_BACKEND)
 
 else ()
     message(FATAL_ERROR "Unknown graphics backend: ${GRAPHICS_BACKEND}")
 endif ()
 
-## Setup audio backend
-#if (BX_AUDIO_BACKEND STREQUAL "PortAudio")
-#    message(STATUS "Using PortAudio as the audio backend")
-#    target_compile_definitions(bx PUBLIC BX_AUDIO_PORTAUDIO_BACKEND)
-#	target_link_libraries(bx-platform-portaudio PRIVATE bx)
-#	target_link_libraries(bx PUBLIC bx-platform-portaudio)
-#
-#elseif (BX_AUDIO_BACKEND STREQUAL "Custom")
-#    message(STATUS "Using a custom audio backend")
-#    target_compile_definitions(bx PUBLIC BX_AUDIO_CUSTOM_BACKEND)
-#
-#else ()
-#    message(FATAL_ERROR "Unknown audio backend: ${WINDOW_BACKEND}")
-#endif ()
+# Setup audio backend
+if (BX_AUDIO_BACKEND STREQUAL "PortAudio")
+    message(STATUS "Using PortAudio as the audio backend")
+    target_compile_definitions(bx-platform-common PUBLIC BX_AUDIO_PORTAUDIO_BACKEND)
+
+	target_sources(bx-platform-common PRIVATE
+        "src/bx/platform/audio_portaudio.cpp"
+    )
+
+    target_link_libraries(bx-platform-common PRIVATE PortAudio)
+
+elseif (BX_AUDIO_BACKEND STREQUAL "Custom")
+    message(STATUS "Using a custom audio backend")
+    target_compile_definitions(bx-platform-common PUBLIC BX_AUDIO_CUSTOM_BACKEND)
+
+else ()
+    message(FATAL_ERROR "Unknown audio backend: ${WINDOW_BACKEND}")
+endif ()
 
 # Set the output directories for bx-platform-common to the 'modules' folder within the main output directory
 set_target_properties(bx-platform-common PROPERTIES

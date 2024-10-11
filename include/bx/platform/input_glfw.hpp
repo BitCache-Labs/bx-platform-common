@@ -15,7 +15,7 @@ public:
 	void Reload() override;
 	void Shutdown() override;
 
-	void Poll() override;
+	void PollEvents() override;
 	float GetAxis(GamepadAxis axis) override;
 	bool GetButton(GamepadButton button) override;
 	bool GetButtonOnce(GamepadButton button) override;

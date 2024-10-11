@@ -7,3 +7,6 @@ add_subdirectory(glfw)
 
 # GLAD lib
 add_subdirectory (glad)
+
+# Portaudio lib
+add_subdirectory (portaudio)

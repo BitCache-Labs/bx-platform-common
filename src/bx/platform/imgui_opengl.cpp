@@ -7,7 +7,7 @@
 
 bool GraphicsOpenGL::InitializeImGui()
 {
-    ImGui::SetCurrentContext(ImGuiImpl::GetCurrentContext());
+    ImGui::SetCurrentContext(ImGuiManager::GetCurrentContext());
 
 #if defined BX_GRAPHICS_OPENGL_BACKEND
     if (!ImGui_ImplOpenGL3_Init("#version 460 core\n"))

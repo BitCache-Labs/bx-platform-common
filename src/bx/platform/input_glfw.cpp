@@ -57,7 +57,7 @@ bool InputGLFW::Initialize()
 	glfwSetMouseButtonCallback(glfwWin.GetWindowPtr(), InputAccess::mousebutton_callback);
 #endif
 
-	Poll();
+	PollEvents();
 
 	return true;
 }
@@ -75,7 +75,7 @@ void InputGLFW::Shutdown()
 #endif
 }
 
-void InputGLFW::Poll()
+void InputGLFW::PollEvents()
 {
 	PROFILE_FUNCTION();
 	for (int i = 0; i < nr_keys; ++i)

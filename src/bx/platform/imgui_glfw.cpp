@@ -7,7 +7,7 @@
 
 bool WindowGLFW::InitializeImGui()
 {
-    ImGui::SetCurrentContext(ImGuiImpl::GetCurrentContext());
+    ImGui::SetCurrentContext(ImGuiManager::GetCurrentContext());
 
 #if defined BX_GRAPHICS_OPENGL_BACKEND
     if (!ImGui_ImplGlfw_InitForOpenGL(m_pWindow, true))
