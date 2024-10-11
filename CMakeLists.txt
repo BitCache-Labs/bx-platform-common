@@ -114,3 +114,12 @@ add_custom_command(TARGET bx-platform-common POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE:bx-platform-common>" "$<TARGET_FILE_DIR:bx>/extern/"
     COMMENT "Copying bx-platform-common to bx's modules directory."
 )
+
+if (BX_INSTALL)
+    # Install rule to copy bx-platform-common to the installation directory
+    install(TARGETS bx-platform-common
+        RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/modules"  # Adjust this as needed for your directory structure
+        LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/bin/modules"
+        COMPONENT runtime
+    )
+endif()
